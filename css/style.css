@@ -59,7 +59,13 @@
 }
 .fundo input {
     font-size: 18px;
+    
 }
+.fundo textarea:focus, input:focus, select:focus {
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+} 
 .fundo ion-icon {
     font-size: 26px;
 }
@@ -113,6 +119,14 @@
 }
 .opcoes .titulo {
     margin: 7px 0;
+}
+.opcoes .online ion-icon {
+    font-size: 15px;
+    color: #28BB25;
+    --ionicon-stroke-width: 110px;
+}
+.opcoes .online {
+    justify-content: end;
 }
 
 /* ==========================*/
