@@ -10,42 +10,43 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <section class="celular">
-        <header class="topo flex aling just-b"> 
+    <section class="corpoDoCelular">
+        <header class="barraSup flex aling just-b"> 
             <img src="./imagens/logo 1.jpg" alt="">
             <ion-icon name="people"></ion-icon>
         </header>
-        <main class="corpo"></main>
-        <footer class="fundo flex aling just-b">
+        <main class="bandeijaDeMensagem"></main>
+        <footer class="barraInf flex aling just-b">
             <input type="text">
             <ion-icon name="paper-plane-outline"></ion-icon>
         </footer>
-    </section>
-
-    <section class="contatos invisivel">
-        <div class="opcoes">
-            <header class="flex aling just-c"><h1>Escolha um contato para enviar mensagem:</h1></header>
-            <main>
-                <ul class="titulo">
-                    <li>
-                        <div class="pessoa flex just-b">
-                            <div class="ico-nome flex aling">
-                                <ion-icon name="people"></ion-icon>
-                                <span>nome</span>
+    
+        <section class="secaoDeOpcoes flex  ">
+            <div class="barraOpcoes">
+                <header class="barraSupOpcoes flex aling"><h1>Escolha um contato para enviar mensagem:</h1></header>
+                <main>
+                    <ul class="listaContatos">
+                        <li>
+                            <div class="pessoa flex aling just-b">
+                                <div class="flex aling">
+                                    <ion-icon name="people"></ion-icon>
+                                    <span>Todos</span>
+                                </div>
+                                <div class="on">
+                                    <ion-icon name="checkmark-outline"></ion-icon>
+                                </div>
                             </div>
-                            <div class="online flex aling"><ion-icon name="checkmark-outline"></ion-icon></div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
 
-                <h1>Escolha a visibilidade:</h1>
-                <ul>
-                    <li><span></span><span></span></li>
-                </ul>
-            </main>
-        </div>
+                    <div class="barraMedOpcoes flex aling just-c"><h1>Escolha a visibilidade:</h1></div>
+                    <ul>
+                        
+                    </ul>
+                </main>
+            </div>
+        </section>
     </section>
-
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
