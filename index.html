@@ -17,20 +17,32 @@
             </div>
             <div class="login flex flexColumn aling">
                 <input type="text" placeholder="Digite seu nome">
-                <button>Entrar</button>
+                <button onclick="entrarNaSala()">Entrar</button>
             </div>
         </section>
+        
 
         <header class="barraSup flex aling just-b"> 
             <img src="./imagens/logo 1.jpg" alt="">
             <ion-icon name="people"></ion-icon>
         </header>
-        <main class="bandeijaDeMensagem"></main>
+
+        <main class="bandeijaDeMensagem">
+            <div class="mensagem flex aling">
+                <span class="spanPrincipal">
+                    <span class="horas">(horas)</span>
+                    <span class="nomeUsuario">Ottoniel</span>
+                    <span class="mensagemUsuario">entra na sala...</span>
+                </span>
+            </div>
+        </main>
+
         <footer class="barraInf flex aling just-b">
             <input type="text">
             <ion-icon name="paper-plane-outline"></ion-icon>
         </footer>
     
+
         <section class="secaoDeOpcoes flex invisivel">
             <div class="barraOpcoes">
                 <header class="barraSupOpcoes flex aling"><h1>Escolha um contato para enviar mensagem:</h1></header>
@@ -47,6 +59,17 @@
                                 </div>
                             </div>
                         </li>
+                        <li>
+                            <div class="pessoa flex aling just-b online">
+                                <div class="flex aling">
+                                    <ion-icon name="person-circle"></ion-icon>
+                                    <span>Ottoniel</span>
+                                </div>
+                                <div class="on">
+                                    <ion-icon name="checkmark-outline"></ion-icon>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
 
                     <div class="barraMedOpcoes flex aling just-c"><h1>Escolha a visibilidade:</h1></div>
@@ -57,6 +80,9 @@
             </div>
         </section>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
