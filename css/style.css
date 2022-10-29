@@ -130,6 +130,10 @@ h1 {
 .barraInf input {
     font-size: 17px;
 }
+.barraInf button {
+    background-color: transparent;
+    border: none;
+}
 
 /*============== bandeija de mensagem ================*/
 

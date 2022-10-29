@@ -2,7 +2,7 @@
 let nomeDoUsuario = "";
 let nomeParaEnvio = {nome: ""};
 function entrarNaSala(){
-    nomeDoUsuario = document.querySelector("input").value;
+    nomeDoUsuario = document.querySelector(".secaoDeLogin input").value;
     nomeParaEnvio = {name: nomeDoUsuario};
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", nomeParaEnvio);
@@ -11,9 +11,8 @@ function entrarNaSala(){
     promise.catch(usuarioInvalido);
 }
 
-function usuarioValido(resposta){
-    console.log("usuário valido");
-//    setInterval(manterOnline, 5000)
+function usuarioValido(){
+    setInterval(manterOnline, 5000)
 
     const tirarAreaDeLogin = document.querySelector('.secaoDeLogin');
     tirarAreaDeLogin.classList.add('invisivel');
@@ -55,7 +54,7 @@ function paraACaixaDeMensagens() {
         areaDasMensagens.innerHTML += `
         <div class="mensagem flex aling">
             <span class="spanPrincipal">
-                <span class="horas">(horas)</span>
+                <span class="horas">${mensagem.time}</span>
                 <span class="nomeUsuario">${mensagem.from}</span>
                 <span class="to">para <strong>${mensagem.to}</strong></span>
                 <span class="mensagemUsuario">${mensagem.text}</span>
@@ -63,4 +62,24 @@ function paraACaixaDeMensagens() {
         </div>  
         `;
     };
+
+    const ultimoElementoDeMensagem = document.querySelectorAll(".mensagem");
+    ultimoElementoDeMensagem[ultimoElementoDeMensagem.length - 1].scrollIntoView()
+
+    setTimeout(carregarMensagensDoServidor, 3000)
+}
+
+/* ======================== enviar mensagem =============================*/
+let mensagemDoUsuario = "";
+let mensagemParaEnvio = {from:"",to:"",text:"",type:"",time:""};
+function enviarMensagem(){
+    mensagemDoUsuario = document.querySelector(".barraInf input").value;
+    mensagemParaEnvio = {
+        "from": nomeDoUsuario,
+        "to": "Todos",
+        "text": mensagemDoUsuario,
+        "type": "message",
+        "time": new Date().toLocaleTimeString().replace("AM","").replace("PM","").replace(" ","")
+    }
+    
 }
