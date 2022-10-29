@@ -4,12 +4,17 @@ let nomeDoUsuario = "";
 let nomeParaEnvio = {nome: ""};
 function entrarNaSala(){
     nomeDoUsuario = document.querySelector(".secaoDeLogin input").value;
-    nomeParaEnvio = {name: nomeDoUsuario};
 
-    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", nomeParaEnvio);
+    if (nomeDoUsuario ===''){return alert("Escreva um nome")}
+    else if (nomeDoUsuario.length <=3){return alert("Escreva um nome com mais de 3 caracteres")}
+    else{
+        nomeParaEnvio = {name: nomeDoUsuario};
 
-    promise.then(usuarioValido);
-    promise.catch(usuarioInvalido);
+        const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", nomeParaEnvio);
+
+        promise.then(usuarioValido);
+        promise.catch(usuarioInvalido);
+    }
 }
 
 function usuarioValido(){
@@ -25,8 +30,8 @@ function manterOnline(){
 }
 function usuarioInvalido(erro){
     console.log(erro)
-    if(erro.response.status === 400){console.log("usuário existente")}
-    else {console.log("é outro problema")}
+    if(erro.response.status === 400){alert("usuário existente")}
+    else {alert("Verifique sua conexão a internet e tente novamente em alguns instantes!")}
 }
 
 // ======== processamento de mensagem do servidor =========
@@ -38,8 +43,8 @@ function carregarMensagensDoServidor() {
 
     promise.then(respostaChegou);
 }
-function problemasComAsMensagens(resposta){
-    console.log(resposta)
+function problemasComAsMensagens(){
+    alert("Possível problema com o Servidor, por favor verifique sua internet e tente novamente em 10 segundos!")
 }
 
 function respostaChegou(resposta) {
@@ -71,10 +76,12 @@ function paraACaixaDeMensagens() {
     const ultimoElementoDeMensagem = document.querySelectorAll(".mensagem");
     ultimoElementoDeMensagem[ultimoElementoDeMensagem.length - 1].scrollIntoView()
 
-    setTimeout(carregarMensagensDoServidor, 3000)
+    usuariosOnline();
+    setTimeout(carregarMensagensDoServidor, 3000);  
 }
 
-/* ======================== enviar mensagem =============================*/
+// ======================== enviar mensagem =============================
+
 let mensagemDoUsuario = "";
 let mensagemParaEnvio = {from:"",to:"",text:"",type:"",time:""};
 function enviarMensagem(){
@@ -85,9 +92,54 @@ function enviarMensagem(){
         "text": mensagemDoUsuario,
         "type": "message",
     }
+    mensagemDoUsuario = "";
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagemParaEnvio);
-    promise.then(carregarMensagensDoServidor)
-    promise.catch(problemasComAsMensagens)
-    carregarMensagensDoServidor()
+    promise.then(carregarMensagensDoServidor);
+    promise.catch(problemasComAsMensagens);
+
+    carregarMensagensDoServidor();
+}
+
+// ====================== Usuários onlines ======================
+
+function ativarAbaDeOpcoes(){
+    const classeDaAba = document.querySelector(".secaoDeOpcoes");
+    classeDaAba.classList.toggle("invisivel");
+}
+
+let usuarios = [];
+function usuariosOnline() {
+
+    const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+    promise.then(listaDeUsuarios)
+}
+function listaDeUsuarios(resposta){
+    usuarios = resposta.data
+    apresentarUsuariosOnline()
+}
+
+function apresentarUsuariosOnline() {
+    const areaDeUsuariosOnline = document.querySelector(".listaContatos");
+    areaDeUsuariosOnline.innerHTML = "";
+
+    for (i=0; i<usuarios.length - 1; i++) {
+        let usuario = usuarios[i].name;
+
+        areaDeUsuariosOnline.innerHTML += `
+        <li>
+            <div class="pessoa flex aling just-b online">
+                <div class="nome flex aling">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <span>${usuario}</span>
+                </div>
+                <div class="on">
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+            </div>
+        </li>
+        `;
+    };
+
+    //usuarios = []
 }
