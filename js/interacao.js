@@ -1,4 +1,5 @@
 // =========== login e entrada ao chat ===========
+
 let nomeDoUsuario = "";
 let nomeParaEnvio = {nome: ""};
 function entrarNaSala(){
@@ -23,6 +24,7 @@ function manterOnline(){
     axios.post("https://mock-api.driven.com.br/api/v6/uol/status", nomeParaEnvio);
 }
 function usuarioInvalido(erro){
+    console.log(erro)
     if(erro.response.status === 400){console.log("usuário existente")}
     else {console.log("é outro problema")}
 }
@@ -35,6 +37,9 @@ function carregarMensagensDoServidor() {
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
 
     promise.then(respostaChegou);
+}
+function problemasComAsMensagens(resposta){
+    console.log(resposta)
 }
 
 function respostaChegou(resposta) {
@@ -56,7 +61,7 @@ function paraACaixaDeMensagens() {
             <span class="spanPrincipal">
                 <span class="horas">${mensagem.time}</span>
                 <span class="nomeUsuario">${mensagem.from}</span>
-                <span class="to">para <strong>${mensagem.to}</strong></span>
+                <span class="to">para <strong>${mensagem.to}:</strong></span>
                 <span class="mensagemUsuario">${mensagem.text}</span>
             </span>
         </div>  
@@ -79,7 +84,10 @@ function enviarMensagem(){
         "to": "Todos",
         "text": mensagemDoUsuario,
         "type": "message",
-        "time": new Date().toLocaleTimeString().replace("AM","").replace("PM","").replace(" ","")
     }
-    
+
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagemParaEnvio);
+    promise.then(carregarMensagensDoServidor)
+    promise.catch(problemasComAsMensagens)
+    carregarMensagensDoServidor()
 }

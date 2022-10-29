@@ -146,11 +146,12 @@ h1 {
     background-color: #E5E5E5;
 }
 .bandeijaDeMensagem .mensagem{
-    height: 40px;
+    min-height: 40px;
     padding: 0 5px;
     margin: 5px 0;
     background-color: #FFFFFF;
     border-radius: 2px;
+    overflow-x: hidden;
 }
 .bandeijaDeMensagem .entraNaSala{
     background-color: #DCDCDC;
