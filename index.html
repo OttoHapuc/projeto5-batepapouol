@@ -37,7 +37,7 @@
         </footer>
     
 
-        <section class="secaoDeOpcoes flex ">
+        <section class="secaoDeOpcoes flex invisivel">
             <div onclick="ativarAbaDeOpcoes()" class="voltarAsMensagens flex aling"></div>
             <div class="barraOpcoes">
                 <header class="barraSupOpcoes flex aling"><h1>Escolha um contato para enviar mensagem:</h1></header>
@@ -63,7 +63,7 @@
 
                     <ul class="privadaOuPublica">
                         <li>
-                            <div class="pessoa flex aling just-b marcada">
+                            <div onclick="publicoOuPrivado(this)" class="pessoa flex aling just-b marcada">
                                 <div class="flex aling">
                                     <ion-icon name="people"></ion-icon>
                                     <span>Público</span>
@@ -74,7 +74,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="pessoa flex aling just-b">
+                            <div onclick="publicoOuPrivado(this)" class="pessoa flex aling just-b">
                                 <div class="flex aling">
                                     <ion-icon name="people"></ion-icon>
                                     <span>Reservadamente</span>

@@ -18,7 +18,7 @@ function entrarNaSala(){
 }
 
 function usuarioValido(){
-    //setInterval(manterOnline, 5000)
+    setInterval(manterOnline, 5000)
 
     const tirarAreaDeLogin = document.querySelector('.secaoDeLogin');
     tirarAreaDeLogin.classList.add('invisivel');
@@ -73,8 +73,9 @@ function paraACaixaDeMensagens() {
                 </div>  
             `;
         }
-        else if (mensagem.to === nomeDoUsuario /*|| mensagem.to === usuarioEscolhidoParaPv*/){
-            areaDasMensagens.innerHTML += `
+        else if (mensagem.to === nomeDoUsuario || mensagem.to === usuarioEscolhidoParaPv){
+            if(mensagem.type === "private_message"){
+                areaDasMensagens.innerHTML += `
                 <div class="mensagem flex aling mensagemPrivada">
                     <span class="spanPrincipal">
                         <span class="horas">${mensagem.time}</span>
@@ -84,6 +85,19 @@ function paraACaixaDeMensagens() {
                     </span>
                 </div>  
             `;
+            }
+            else {
+                areaDasMensagens.innerHTML += `
+                <div class="mensagem flex aling">
+                    <span class="spanPrincipal">
+                        <span class="horas">${mensagem.time}</span>
+                        <span class="nomeUsuario">${mensagem.from}</span>
+                        <span class="to">para <strong>${mensagem.to}:</strong></span>
+                        <span class="mensagemUsuario">${mensagem.text}</span>
+                    </span>
+                </div>  
+            `;
+            }
         }
         else if (mensagem.to === "Todos"){
             areaDasMensagens.innerHTML += `
@@ -103,7 +117,7 @@ function paraACaixaDeMensagens() {
     ultimoElementoDeMensagem[ultimoElementoDeMensagem.length - 1].scrollIntoView()
 
     usuariosOnline();
-    //setTimeout(carregarMensagensDoServidor, 3000);  
+    setTimeout(carregarMensagensDoServidor, 3000);  
 }
 
 // ======================== enviar mensagem =============================
@@ -126,6 +140,7 @@ function enviarMensagem(){
         if (verificaSePublicoOuPrivada !== "Público"){
             mensagemParaEnvio.to = usuarioEscolhidoParaPv;
             mensagemParaEnvio.type = "private_message"
+            processaAMensagem(mensagemParaEnvio)
         }
         else {
             mensagemParaEnvio.to = usuarioEscolhidoParaPv;
@@ -156,7 +171,11 @@ let usuarios = [];
 function usuariosOnline() {
 
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
-    promise.then(listaDeUsuarios)
+    promise.then(listaDeUsuarios);
+
+    if (usuarioEscolhidoParaPv !== null && usuarioEscolhidoParaPv !== ""){
+        usuarioEscolhidoParaPv = usuarioAnterior.querySelector('span').innerHTML
+    }
 }
 function listaDeUsuarios(resposta){
     usuarios = resposta.data
@@ -214,9 +233,25 @@ function mensagemParaEsteUsuario(aqui) {
         usuarioEscolhidoParaPv = "";
     }
     else {
-        elementosOnline.classList.remove("online");
+        if (elementosOnline === null){
+            aqui.classList.add('online');
+            usuarioEscolhidoParaPv = aqui.querySelector('span').innerHTML;
+            usuarioAnterior = "";
+        }
+        elementosOnline.classList.remove("online")
         aqui.classList.add('online');
         usuarioEscolhidoParaPv = aqui.querySelector('span').innerHTML;
         usuarioAnterior = "";
     }
 }
+
+// ================= controlando se é privada ou pública =========
+
+function publicoOuPrivado(aqui){
+    const tipoSelecionada = document.querySelector('.marcada');
+
+    if (aqui.querySelector('span').innerHTML !== tipoSelecionada.querySelector('span').innerHTML){
+        tipoSelecionada.classList.remove('marcada')
+        aqui.classList.add('marcada')
+    }
+}   
