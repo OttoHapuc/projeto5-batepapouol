@@ -16,7 +16,7 @@
                 <img src="./imagens/logo 1.jpg" alt="">
             </div>
             <div class="login flex flexColumn aling">
-                <input type="text" placeholder="Digite seu nome">
+                <input type="text" placeholder="Digite um nome para usuário">
                 <button onclick="entrarNaSala()">Entrar</button>
             </div>
         </section>
@@ -37,10 +37,8 @@
         </footer>
     
 
-        <section class="secaoDeOpcoes flex invisivel">
-            <div onclick="ativarAbaDeOpcoes()" class="voltarAsMensagens flex aling">
-                <p>Voltar às mensagens</p>
-            </div>
+        <section class="secaoDeOpcoes flex ">
+            <div onclick="ativarAbaDeOpcoes()" class="voltarAsMensagens flex aling"></div>
             <div class="barraOpcoes">
                 <header class="barraSupOpcoes flex aling"><h1>Escolha um contato para enviar mensagem:</h1></header>
                 <main>
@@ -51,32 +49,41 @@
                                     <ion-icon name="people"></ion-icon>
                                     <span>Todos</span>
                                 </div>
-                                <div class="on">
-                                    <ion-icon name="checkmark-outline"></ion-icon>
-                                </div>
                             </div>
                         </li>
                     </ul>
 
                     <div class="divDeContatos">
                         <ul class="listaContatos">
-                            <li>
-                                <div class="pessoa flex aling just-b online">
-                                    <div class="nome flex aling">
-                                        <ion-icon name="person-circle"></ion-icon>
-                                        <span>Ottoniel</span>
-                                    </div>
-                                    <div class="on">
-                                        <ion-icon name="checkmark-outline"></ion-icon>
-                                    </div>
-                                </div>
-                            </li>
+                            
                         </ul>
                     </div>
 
                     <div class="barraMedOpcoes flex aling just-c"><h1>Escolha a visibilidade:</h1></div>
-                    <ul>
-                        
+
+                    <ul class="privadaOuPublica">
+                        <li>
+                            <div class="pessoa flex aling just-b marcada">
+                                <div class="flex aling">
+                                    <ion-icon name="people"></ion-icon>
+                                    <span>Público</span>
+                                </div>
+                                <div class="on">
+                                    <ion-icon name="checkmark-outline"></ion-icon>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="pessoa flex aling just-b">
+                                <div class="flex aling">
+                                    <ion-icon name="people"></ion-icon>
+                                    <span>Reservadamente</span>
+                                </div>
+                                <div class="on">
+                                    <ion-icon name="checkmark-outline"></ion-icon>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </main>
             </div>

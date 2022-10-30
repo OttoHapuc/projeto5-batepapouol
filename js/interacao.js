@@ -18,7 +18,7 @@ function entrarNaSala(){
 }
 
 function usuarioValido(){
-    setInterval(manterOnline, 5000)
+    //setInterval(manterOnline, 5000)
 
     const tirarAreaDeLogin = document.querySelector('.secaoDeLogin');
     tirarAreaDeLogin.classList.add('invisivel');
@@ -61,23 +61,49 @@ function paraACaixaDeMensagens() {
     for (i=0; i<mensagens.length - 1; i++) {
         let mensagem = mensagens[i];
 
-        areaDasMensagens.innerHTML += `
-        <div class="mensagem flex aling">
-            <span class="spanPrincipal">
-                <span class="horas">${mensagem.time}</span>
-                <span class="nomeUsuario">${mensagem.from}</span>
-                <span class="to">para <strong>${mensagem.to}:</strong></span>
-                <span class="mensagemUsuario">${mensagem.text}</span>
-            </span>
-        </div>  
-        `;
+        if (mensagem.text === "entra na sala..." || mensagem.text === "sai da sala..."){
+            areaDasMensagens.innerHTML += `
+                <div class="mensagem flex aling entraNaSala">
+                    <span class="spanPrincipal">
+                        <span class="horas">${mensagem.time}</span>
+                        <span class="nomeUsuario">${mensagem.from}</span>
+                        <span class="to">para <strong>${mensagem.to}:</strong></span>
+                        <span class="mensagemUsuario">${mensagem.text}</span>
+                    </span>
+                </div>  
+            `;
+        }
+        else if (mensagem.to === nomeDoUsuario /*|| mensagem.to === usuarioEscolhidoParaPv*/){
+            areaDasMensagens.innerHTML += `
+                <div class="mensagem flex aling mensagemPrivada">
+                    <span class="spanPrincipal">
+                        <span class="horas">${mensagem.time}</span>
+                        <span class="nomeUsuario">${mensagem.from}</span>
+                        <span class="to">para <strong>${mensagem.to}:</strong></span>
+                        <span class="mensagemUsuario">${mensagem.text}</span>
+                    </span>
+                </div>  
+            `;
+        }
+        else if (mensagem.to === "Todos"){
+            areaDasMensagens.innerHTML += `
+                <div class="mensagem flex aling">
+                    <span class="spanPrincipal">
+                        <span class="horas">${mensagem.time}</span>
+                        <span class="nomeUsuario">${mensagem.from}</span>
+                        <span class="to">para <strong>${mensagem.to}:</strong></span>
+                        <span class="mensagemUsuario">${mensagem.text}</span>
+                    </span>
+                </div>  
+            `;
+        }
     };
 
     const ultimoElementoDeMensagem = document.querySelectorAll(".mensagem");
     ultimoElementoDeMensagem[ultimoElementoDeMensagem.length - 1].scrollIntoView()
 
     usuariosOnline();
-    setTimeout(carregarMensagensDoServidor, 3000);  
+    //setTimeout(carregarMensagensDoServidor, 3000);  
 }
 
 // ======================== enviar mensagem =============================
@@ -86,19 +112,37 @@ let mensagemDoUsuario = "";
 let mensagemParaEnvio = {from:"",to:"",text:"",type:"",time:""};
 function enviarMensagem(){
     mensagemDoUsuario = document.querySelector(".barraInf input").value;
+
+    const verificaSePublicoOuPrivada = document.querySelector('.marcada').querySelector('span').innerHTML;
+
     mensagemParaEnvio = {
         "from": nomeDoUsuario,
         "to": "Todos",
         "text": mensagemDoUsuario,
         "type": "message",
     }
-    mensagemDoUsuario = "";
 
+    if (usuarioEscolhidoParaPv !== "") {
+        if (verificaSePublicoOuPrivada !== "Público"){
+            mensagemParaEnvio.to = usuarioEscolhidoParaPv;
+            mensagemParaEnvio.type = "private_message"
+        }
+        else {
+            mensagemParaEnvio.to = usuarioEscolhidoParaPv;
+            processaAMensagem(mensagemParaEnvio)
+        }
+    }
+    else {processaAMensagem(mensagemParaEnvio)}
+
+}
+
+function processaAMensagem(mensagemParaEnvio){
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagemParaEnvio);
-    promise.then(carregarMensagensDoServidor);
-    promise.catch(problemasComAsMensagens);
+        promise.then(carregarMensagensDoServidor);
+        promise.catch(problemasComAsMensagens);
 
-    carregarMensagensDoServidor();
+        mensagemDoUsuario = "";
+        carregarMensagensDoServidor();
 }
 
 // ====================== Usuários onlines ======================
@@ -128,7 +172,7 @@ function apresentarUsuariosOnline() {
 
         areaDeUsuariosOnline.innerHTML += `
         <li>
-            <div class="pessoa flex aling just-b online">
+            <div onclick="mensagemParaEsteUsuario(this)" class="pessoa flex aling just-b">
                 <div class="nome flex aling">
                     <ion-icon name="person-circle"></ion-icon>
                     <span>${usuario}</span>
@@ -141,5 +185,38 @@ function apresentarUsuariosOnline() {
         `;
     };
 
-    //usuarios = []
+    usuarios = []
+
+}
+
+// ===================== privatizar uma mensagem ============
+let usuarioEscolhidoParaPv = "";
+let usuarioAnterior = "";
+function mensagemParaEsteUsuario(aqui) {
+    const elementosOnline = document.querySelector(".online");
+    
+
+    if (usuarioAnterior === ""){
+        if (elementosOnline !== null){
+            elementosOnline.classList.remove("online");
+            aqui.classList.add('online');
+            usuarioAnterior = aqui;
+            usuarioEscolhidoParaPv = aqui.querySelector('span').innerHTML;
+    }
+        aqui.classList.add('online');
+        usuarioAnterior = aqui;
+        usuarioEscolhidoParaPv = aqui.querySelector('span').innerHTML;
+    }
+    else if(usuarioAnterior === aqui){
+        elementosOnline.classList.remove("online");
+        aqui.classList.remove("online");
+        usuarioAnterior = "";
+        usuarioEscolhidoParaPv = "";
+    }
+    else {
+        elementosOnline.classList.remove("online");
+        aqui.classList.add('online');
+        usuarioEscolhidoParaPv = aqui.querySelector('span').innerHTML;
+        usuarioAnterior = "";
+    }
 }

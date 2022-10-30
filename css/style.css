@@ -26,14 +26,14 @@ strong{
 
 .corpoDoCelular{
     width: 375px;
-    height: 85vmax;
+    height: 100vh;
     margin: auto;
     position: relative;
     box-shadow: 0 0 0 2px black;
 }
 .secaoDeOpcoes{
     width: 375px;
-    height: 85vmax;
+    height: 100vh;
     margin: auto;
 }
 .secaoDeOpcoes {
@@ -60,7 +60,7 @@ h1 {
     left: 0;
     z-index: 2;
     width: 375px;
-    height: 85vmax;
+    height: 100vh;
     background-color: #FFFFFF;
     font-size: 18px;
     font-weight: 400;
@@ -156,6 +156,9 @@ h1 {
 .bandeijaDeMensagem .entraNaSala{
     background-color: #DCDCDC;
 }
+.bandeijaDeMensagem .mensagemPrivada{
+    background-color: #FFDEDE;
+}
 .bandeijaDeMensagem .spanPrincipal {
     line-height: 20px;
 }
@@ -174,6 +177,8 @@ h1 {
     color: #FFDEDE;
 }
 
+
+
 /* ================= seção de opções ==================*/
 
 .barraOpcoes {
@@ -190,10 +195,12 @@ h1 {
 .pessoa {
     font-size: 16px;
     padding: 5px 17px;
+    box-shadow: 0px 0px 1px;
+    border-radius: 2px;
 }
 .pessoa span {
     margin-left: 7px;
-    max-width: 100px;
+    max-width: 140px;
     overflow: hidden;
 }
 .pessoa .nome{
@@ -202,7 +209,8 @@ h1 {
 .pessoa ion-icon {
     font-size: 20px;
 }
-.pessoa.online .on ion-icon {
+.pessoa.online .on ion-icon,
+.pessoa.marcada .on ion-icon {
     display: block;
     font-size: 13px;
     --ionicon-stroke-width: 110px;
@@ -215,11 +223,8 @@ h1 {
 
 .voltarAsMensagens {
     text-align: center;
-    margin: auto 20px;
-    width: 80px;
-    height: 80px;
-    background-color: #d7d7d7ab;
-    border-radius: 10px;
+    height: 100%;
+    width: 116px;
 }
 /* ====== ocultamento da seção ===== */
 .invisivel {
