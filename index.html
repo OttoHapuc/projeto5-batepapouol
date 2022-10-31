@@ -16,8 +16,12 @@
                 <img src="./imagens/logo 1.jpg" alt="">
             </div>
             <div class="login flex flexColumn aling">
-                <input type="text" placeholder="Digite um nome para usuário">
-                <button onclick="entrarNaSala()">Entrar</button>
+                <input data-identifier="enter-name" type="text" placeholder="Digite um nome para usuário">
+                <button data-identifier="start" onclick="entrarNaSala()">Entrar</button>
+            </div>
+            <div class="carregamento flex flexColumn aling invisivel">
+                <div class="c-loader"></div>
+                <div><span>Carregando...</span></div>
             </div>
         </section>
         

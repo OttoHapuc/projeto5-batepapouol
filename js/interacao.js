@@ -18,12 +18,21 @@ function entrarNaSala(){
 }
 
 function usuarioValido(){
-    setInterval(manterOnline, 5000)
+    setInterval(manterOnline, 5000);
 
-    const tirarAreaDeLogin = document.querySelector('.secaoDeLogin');
-    tirarAreaDeLogin.classList.add('invisivel');
+    const momentoDeCarregamento = document.querySelector(".login");
+    momentoDeCarregamento.classList.add("invisivel");
+    const momentoDeCarregamento2 = document.querySelector(".carregamento");
+    momentoDeCarregamento2.classList.remove('invisivel');
+
+    setInterval(tirarAreaDeLogin, 5000);
+    
 
     carregarMensagensDoServidor()
+}
+function tirarAreaDeLogin(){
+    const tirarAreaDeLogin = document.querySelector('.secaoDeLogin');
+    tirarAreaDeLogin.classList.add('invisivel');
 }
 function manterOnline(){
     axios.post("https://mock-api.driven.com.br/api/v6/uol/status", nomeParaEnvio);
@@ -135,7 +144,7 @@ function enviarMensagem(){
         "text": mensagemDoUsuario,
         "type": "message",
     }
-
+    
     if (usuarioEscolhidoParaPv !== "") {
         if (verificaSePublicoOuPrivada !== "Público"){
             mensagemParaEnvio.to = usuarioEscolhidoParaPv;
