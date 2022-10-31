@@ -181,7 +181,7 @@ function usuariosOnline() {
 
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
     promise.then(listaDeUsuarios);
-
+    console.log(usuarioAnterior)
     if (usuarioEscolhidoParaPv !== null && usuarioEscolhidoParaPv !== ""){
         usuarioEscolhidoParaPv = usuarioAnterior.querySelector('span').innerHTML
     }
